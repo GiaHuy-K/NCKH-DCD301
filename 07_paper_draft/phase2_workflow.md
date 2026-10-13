@@ -223,4 +223,4 @@ Phân tích đó chia nhóm **sau khi biết kết quả**. Câu hỏi của B4 
 - [x] B3 Phân cụm — GMM k = 3 (06_experiment_results/phase2_b3_b4.md)
 - [x] B4 So sánh với ADI–CV² — kết quả phần lớn âm tính: C1 có, C2 một phần, C3 không, C4 không
 - [x] B5 Bỏ TSB-P — kết luận gần như không đổi; tương quan hạng M5–VN1 yếu đi (06_experiment_results/phase2_b5.md). Chronos-2 cho phụ lục: đang tính lại
-- [ ] B6 Viết lại bài — đã có `v3_outline.md`, `v3_tables.md`, `v3_draft.md` (toàn văn, không còn chỗ chờ); còn: đổ vào mẫu ICIIT, kiểm tra số trang, Turnitin
+- [ ] B6 Viết lại bài — đã có `v3_draft.md` và bản theo mẫu ICIIT `08_final_submission/ICIIT2027_paper_v3.docx` (10 trang, dựng bằng `code/build_iciit_docx.py`); còn: tên tác giả, đơn vị, link kho mã, biểu mẫu Authors' Information, Turnitin

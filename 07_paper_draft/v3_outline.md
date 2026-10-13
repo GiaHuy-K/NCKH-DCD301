@@ -64,7 +64,7 @@ Những gì **không** được khẳng định:
 
 ## 4. Chỗ còn chờ số liệu
 
-- [ ] **Table 8 (c):** M5 chỉ dùng 21 đặc trưng chung — đang chạy (`code/outputs/logs/rerun_sf_driver.log`). Câu ở mục 5.7 và một câu trong Discussion phụ thuộc kết quả này.
+- [x] **Table 8 (c):** M5 chỉ dùng 21 đặc trưng chung — đã có: tồn kho LGB-Q đổi dưới 1% ở cả ba cửa sổ, LGB-Q vẫn dẫn đầu. Đã điền vào `v3_draft.md` mục 5.6; không câu nào khác phải sửa.
 - [x] **Table A1:** Chronos-2 so với 7 phương pháp trên VN1 và VNF — đã có.
 
 ## 5. Chỗ phải sửa so với `final_paper_revA.docx`

@@ -159,4 +159,36 @@ Nguồn: `code/outputs/equal_fill_ci_w26_nop.md`.
 - [x] B2 Khác biệt hai bộ dữ liệu
 - [x] B2b (a) So sánh sau khi cân bằng thành phần chuỗi
 - [x] B2b (b) Thử nghiệm bỏ đặc trưng giá trên VN1 — xong cả ba cửa sổ; kết quả ở `phase2_b3_b4.md` mục 3
-- [ ] B2b (c) M5 chỉ dùng 21 đặc trưng chung — trong hàng đợi (`code/outputs/logs/rerun_sf_driver.log`)
+- [x] B2b (c) M5 chỉ dùng 21 đặc trưng chung — xong cả ba cửa sổ (kết quả ở cuối file)
+
+## B2b (c) — M5 chỉ dùng 21 đặc trưng chung (kết quả)
+
+Nguồn: `code/outputs/equal_fill_ci*_sf.md`, `07_paper_draft/v3_tables.md` (Table 8 c).
+
+Bốn mô hình ML của M5 được huấn luyện lại không có 6 đặc trưng riêng (số sự kiện, số ngày SNAP, dept, cat, store, state), ở cả ba cửa sổ.
+
+| | Cửa sổ chính | Cửa sổ thứ hai | Cửa sổ thứ ba |
+|---|---|---|---|
+| Tồn kho LGB-Q ở fill 0,94: 27 → 21 đặc trưng | 1,376 → 1,388 | 1,485 → 1,492 | 1,736 → 1,748 |
+| TSB-NB cần nhiều hơn LGB-Q: 27 → 21 đặc trưng | +10,0% → +9,0% | +7,5% → +7,0% | +4,9% → +4,2% |
+| LGB-T cần nhiều hơn LGB-Q | +5,1% → +4,8% | +6,8% → +6,6% | +3,3% → +2,7% |
+| P(LGB-Q dẫn đầu), 21 đặc trưng | 1,00 | 1,00 | 1,00 |
+| SQL trung bình LGB-Q, h = 3 | 0,208 → 0,210 | 0,215 → 0,217 | 0,222 → 0,223 |
+
+**Kết luận:**
+
+- Bỏ 6 đặc trưng riêng, tồn kho LGB-Q cần chỉ tăng dưới 1%, và mọi khoảng tin cậy của chênh lệch với TSB-NB, ETS, LGB-T, LGB-C vẫn không chứa 0.
+- Lợi thế của LGB-Q trên M5 **không** đến từ việc mô hình có thêm thông tin về lịch sự kiện hay cấu trúc sản phẩm.
+- Ở tần suất tuần, các đặc trưng này gần như không thêm giá trị dự báo.
+
+## Tổng kết B2b
+
+Cả ba nguồn khác biệt về xử lý đã được kiểm tra, và không nguồn nào giải thích được vì sao M5 và VN1 cho kết luận khác nhau:
+
+| Nguồn | Kết quả |
+|---|---|
+| (a) Thành phần chuỗi | Cân bằng xong, kết luận VN1 không đổi |
+| (b) Giá | Bỏ đặc trưng giá, tồn kho LGB-Q đổi dưới 1% |
+| (c) Lượng thông tin của mô hình | Bỏ 6 đặc trưng riêng của M5, tồn kho LGB-Q đổi dưới 1% |
+
+[Nhận định nhóm] Khác biệt còn lại thuộc về bản chất hai bối cảnh bán lẻ, không phải do cách chuẩn bị dữ liệu. Điểm khác rõ nhất đã đo được là mức biến động nhu cầu giữa lịch sử và giai đoạn kiểm thử (`code/outputs/demand_shift.md`).

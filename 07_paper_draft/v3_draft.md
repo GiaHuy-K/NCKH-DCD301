@@ -2,7 +2,7 @@
 
 > Draft v3 (13/10/2026) for ICIIT 2027 — single column, at most 10 pages including figures, tables and references.
 > Tables are generated in `v3_tables.md`; the numbers quoted in the text come from that file and from `06_experiment_results/phase2_*.md`.
-> `[[PENDING-SF]]` marks the only passage that depends on a run still in progress (M5 with the 21 shared features).
+> All runs are complete; no passage is pending.
 > Author names, affiliations and the repository link are to be added.
 
 ## Abstract
@@ -135,7 +135,7 @@ No rule shows an economic benefit within 26 weeks. The break-even salvage ratio 
 
 ### 5.6 Are the differences between the datasets artefacts?
 
-We checked three possible artefacts (details in the repository). First, composition: re-weighting the VN1 series so that their feature distribution matches M5 (mean standardised difference of the features reduced from 0.32–0.39 to 0.02–0.03) leaves the VN1 conclusions unchanged. LGB-Q is more accurate than TSB-NB on 49–51% of the re-weighted series, against 60–64% on M5, and TSB-NB still leads in the second window. Second, prices: VN1 prices are observed in less than half of the weeks, but refitting the four global models without price features changes the inventory needed by LGB-Q by less than 1% in every window. Third, information: [[PENDING-SF]] the global models on M5 use six features that VN1 lacks; refitting them on M5 with the shared features only *(result to be inserted: inventory needed by LGB-Q and its lead over TSB-NB and LGB-T, three windows)*.
+We checked three possible artefacts (details in the repository). First, composition: re-weighting the VN1 series so that their feature distribution matches M5 (mean standardised difference of the features reduced from 0.32–0.39 to 0.02–0.03) leaves the VN1 conclusions unchanged. LGB-Q is more accurate than TSB-NB on 49–51% of the re-weighted series, against 60–64% on M5, and TSB-NB still leads in the second window. Second, prices: VN1 prices are observed in less than half of the weeks, but refitting the four global models without price features changes the inventory needed by LGB-Q by less than 1% in every window. Third, information: the global models on M5 use six features that VN1 lacks (events, SNAP days and four hierarchy attributes). Refitting them on M5 with the 21 shared features only changes the inventory needed by LGB-Q by less than 1% in every window; LGB-Q keeps the best frontier rank in every resample and still needs 4.2–9.0% less inventory than TSB-NB and 2.7–6.6% less than LGB-T. None of the three checks removes the difference between the datasets, so we attribute it to the retail settings themselves rather than to data preparation.
 
 ## 6 Discussion
 

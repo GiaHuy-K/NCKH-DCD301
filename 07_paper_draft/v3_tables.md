@@ -96,9 +96,9 @@ Mean per-series rank at h = 13 (main / second / third): M5: LGB-Q 3.45 / 3.43 / 
 
 | Window | LGB-Q inventory at fill 0.94 | Δ TSB-NB | Δ LGB-T | LGB-Q mean SQL (h = 3) |
 |---|---|---|---|---|
-| main | pending | pending | pending | pending |
-| second | pending | pending | pending | pending |
-| third | pending | pending | pending | pending |
+| main | 1.38 → 1.39 | +10.0% → +9.0% | +5.1% → +4.8% | 0.208 → 0.210 |
+| second | 1.49 → 1.49 | +7.5% → +7.0% | +6.8% → +6.6% | 0.215 → 0.217 |
+| third | 1.74 → 1.75 | +4.9% → +4.2% | +3.3% → +2.7% | 0.222 → 0.223 |
 
 **Table A1 (appendix).** Chronos-2 (zero-shot, univariate) against the seven-method benchmark, h = 3. Rank = mean per-series SQL rank among 8 methods; Δ = I_Chronos-2 / I_LGB-Q − 1 at equal fill rate with 95% bootstrap CI.
 

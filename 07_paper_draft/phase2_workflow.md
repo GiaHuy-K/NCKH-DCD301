@@ -222,5 +222,5 @@ Phân tích đó chia nhóm **sau khi biết kết quả**. Câu hỏi của B4 
 - [ ] B2b Khả năng so sánh: (a) cân bằng thành phần ✅; (b) bỏ đặc trưng giá VN1 ✅ (giá không giải thích); (c) M5 chỉ dùng đặc trưng chung 🔄 đang chạy
 - [x] B3 Phân cụm — GMM k = 3 (06_experiment_results/phase2_b3_b4.md)
 - [x] B4 So sánh với ADI–CV² — kết quả phần lớn âm tính: C1 có, C2 một phần, C3 không, C4 không
-- [ ] B5 Bỏ TSB-P; Chronos-2 xuống phụ lục
+- [x] B5 Bỏ TSB-P — kết luận gần như không đổi; tương quan hạng M5–VN1 yếu đi (06_experiment_results/phase2_b5.md). Chronos-2 cho phụ lục: đang tính lại
 - [ ] B6 Viết lại bài

@@ -158,5 +158,5 @@ Nguồn: `code/outputs/equal_fill_ci_w26_nop.md`.
 - [x] B1 Đồng bộ
 - [x] B2 Khác biệt hai bộ dữ liệu
 - [x] B2b (a) So sánh sau khi cân bằng thành phần chuỗi
-- [ ] B2b (b) Thử nghiệm bỏ đặc trưng giá trên VN1 — xong 1/3 cửa sổ (`code/outputs/logs/rerun_nop_driver.log`)
+- [x] B2b (b) Thử nghiệm bỏ đặc trưng giá trên VN1 — xong cả ba cửa sổ; kết quả ở `phase2_b3_b4.md` mục 3
 - [ ] B2b (c) M5 chỉ dùng 21 đặc trưng chung — trong hàng đợi (`code/outputs/logs/rerun_sf_driver.log`)

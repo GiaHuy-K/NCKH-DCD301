@@ -61,6 +61,8 @@ def main():
                     help="earlier test window: drop the last OFFSET weeks of the panel (output tag defaults to w<OFFSET>)")
     ap.add_argument("--no-price", action="store_true",
                     help="ablation: drop the price features of the ML models (tag gets the suffix 'nop')")
+    ap.add_argument("--shared-features", action="store_true",
+                    help="ablation: ML models use only the features available in every dataset (tag suffix 'sf')")
     ap.add_argument("--out-suffix", default="",
                     help="extra suffix of the output folder only (forecast cache is shared), e.g. c2 for runs with chronos2")
     ap.add_argument("--default-only-models", default="hgb_quantile,chronos2",
@@ -76,6 +78,9 @@ def main():
     if a.no_price:
         p["use_price"] = False
         a.tag = f"{a.tag}_nop" if a.tag else "nop"
+    if a.shared_features:
+        p["shared_only"] = True
+        a.tag = f"{a.tag}_sf" if a.tag else "sf"
     Y = p["Y"]
     n, T = Y.shape
     test0 = T - config.TEST_WEEKS

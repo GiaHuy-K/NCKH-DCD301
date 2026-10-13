@@ -219,6 +219,7 @@ Phân tích đó chia nhóm **sau khi biết kết quả**. Câu hỏi của B4 
 - [ ] B0 Dọn dẹp, chạy lại thử nghiệm giá
 - [x] B1 Đồng bộ (06_experiment_results/phase2_b1_b2.md)
 - [x] B2 Khác biệt hai bộ dữ liệu (06_experiment_results/phase2_b1_b2.md)
+- [ ] B2b Khả năng so sánh: (a) cân bằng thành phần ✅; (b) bỏ đặc trưng giá VN1 🔄; (c) M5 chỉ dùng đặc trưng chung 🔄 — **phải xong trước B3** (06_experiment_results/phase2_b1_b2.md)
 - [ ] B3 Phân cụm
 - [ ] B4 So sánh với ADI–CV²
 - [ ] B5 Bỏ TSB-P; Chronos-2 xuống phụ lục

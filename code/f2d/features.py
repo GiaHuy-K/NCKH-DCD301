@@ -36,7 +36,8 @@ class Builder:
         self.start = panel["start"]
 
         attrs = panel["attrs"]
-        if panel["name"] == "M5":
+        # shared_only: feature-parity ablation (run_pipeline.py --shared-features), M5 without events / SNAP / statics
+        if panel["name"] == "M5" and not panel.get("shared_only", False):
             self.static_names = ["dept_id", "cat_id", "store_id", "state_id"]
             state = attrs["state_id"].to_numpy()
             names = panel["event_names"]

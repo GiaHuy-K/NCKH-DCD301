@@ -171,6 +171,6 @@ Bốn mô hình ML của VN1 được huấn luyện lại không có hai đặc
 
 ## 5. Còn lại
 
-- [ ] B2b (c): M5 chỉ dùng 21 đặc trưng chung — đang chạy (`code/outputs/logs/rerun_sf_driver.log`).
-- [ ] B5: bỏ TSB-P khỏi mọi bảng; chuyển Chronos-2 xuống phụ lục.
-- [ ] B6: viết lại bài.
+- [x] B2b (c): M5 chỉ dùng 21 đặc trưng chung — xong; kết quả ở cuối `phase2_b1_b2.md`.
+- [x] B5: bỏ TSB-P; Chronos-2 chỉ trên VN1 và VNF (`phase2_b5.md`).
+- [x] B6: bản theo mẫu ICIIT ở `08_final_submission/ICIIT2027_paper_v3.docx`.

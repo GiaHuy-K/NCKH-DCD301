@@ -99,8 +99,8 @@ Trên hai thành phần chính đầu tiên (71% phương sai):
 | Nguồn khác biệt | Cách xử lý | Trạng thái |
 |---|---|---|
 | (a) Thành phần chuỗi (VN1 nhiều chuỗi rời rạc hơn) | Đặt lại trọng số chuỗi để hai bộ có cùng phân phối đặc trưng, rồi so lại kết luận | ✅ xong (dưới đây) |
-| (b) Giá: VN1 thiếu giá ở nhiều tuần và ở toàn bộ Phase 2 | Chạy lại 4 mô hình ML của VN1 không có đặc trưng giá | 🔄 xong cửa sổ thứ hai; hai cửa sổ còn lại đang chạy |
-| (c) Lượng thông tin của mô hình ML: M5 có thêm 6 đặc trưng (sự kiện, SNAP, 4 thuộc tính) | Chạy lại 4 mô hình ML của M5 chỉ với 21 đặc trưng chung | 🔄 đã xếp hàng đợi (`code/outputs/logs/rerun_sf.sh`) |
+| (b) Giá: VN1 thiếu giá ở nhiều tuần và ở toàn bộ Phase 2 | Chạy lại 4 mô hình ML của VN1 không có đặc trưng giá | ✅ xong cả ba cửa sổ (`phase2_b3_b4.md` mục 3) |
+| (c) Lượng thông tin của mô hình ML: M5 có thêm 6 đặc trưng (sự kiện, SNAP, 4 thuộc tính) | Chạy lại 4 mô hình ML của M5 chỉ với 21 đặc trưng chung | ✅ xong cả ba cửa sổ (cuối file này) |
 
 ### (a) So sánh sau khi cân bằng thành phần chuỗi
 
@@ -151,7 +151,7 @@ Nguồn: `code/outputs/equal_fill_ci_w26_nop.md`.
 | Tồn kho LGB-Q ở fill 0,94 | 1,787 | 1,774 |
 | SQL trung bình LGB-Q, h = 3 | 0,539 | 0,540 |
 
-Ở cửa sổ này, đặc trưng giá gần như không ảnh hưởng, và TSB-NB vẫn dẫn đầu. **Giá không giải thích được sự đảo chiều ở cửa sổ thứ hai.** Hai cửa sổ còn lại, gồm cửa sổ chính (nơi Phase 2 không có giá), đang chạy.
+Ở cửa sổ này, đặc trưng giá gần như không ảnh hưởng, và TSB-NB vẫn dẫn đầu. **Giá không giải thích được sự đảo chiều ở cửa sổ thứ hai.** Kết quả của hai cửa sổ còn lại, gồm cửa sổ chính (nơi Phase 2 không có giá), ở `phase2_b3_b4.md` mục 3: cũng không đổi.
 
 ## Trạng thái
 

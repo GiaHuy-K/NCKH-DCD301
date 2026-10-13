@@ -61,7 +61,7 @@ Spearman ρ giữa thứ hạng các phương pháp trên M5 và trên VN1, ba c
 - **Quyết định:** chỉ báo cáo Chronos-2 ở **phụ lục**, trên VN1 (ba cửa sổ) và VNF. Bỏ kết quả M5.
 - **Cách viết trong bài:** "để tránh mọi nghi vấn về việc dữ liệu đánh giá trùng với dữ liệu huấn luyện của mô hình, Chronos-2 chỉ được báo cáo trên VN1 và VNF".
   - Không khẳng định M5 có trong dữ liệu huấn luyện. Báo cáo kỹ thuật không liệt kê M5 trong các bộ dữ liệu huấn luyện (Bảng 6).
-- **Số liệu cho phụ lục:** hạng của Chronos-2 so với 7 phương pháp đang được tính lại (`code/outputs/logs/rerun_c2m7.sh` → các file đuôi `_c2m7`); kèm bản 7 phương pháp của VNF (`_m7`).
+- **Số liệu:** hạng của Chronos-2 so với 7 phương pháp đã được tính lại (`code/outputs/logs/rerun_c2m7.sh` → các file đuôi `_c2m7`); kèm bản 7 phương pháp của VNF (`_m7`).
 - Kết quả M5 của Chronos-2 vẫn nằm trong repo (`code/outputs/M5_c2/`) nhưng không đưa vào bài.
 
 ## 4. Việc phải sửa trong bài (làm ở B6)
@@ -76,5 +76,5 @@ Spearman ρ giữa thứ hạng các phương pháp trên M5 và trên VN1, ba c
 ## 5. Trạng thái
 
 - [x] B5 Bỏ TSB-P: tính lại xong ba cửa sổ; bảng trước/sau ở `code/outputs/drop_tsbp_effect.md`.
-- [ ] Chronos-2 cho phụ lục (so với 7 phương pháp) — đang chạy.
-- [ ] B2b (c) M5 chỉ dùng 21 đặc trưng chung — đang chạy.
+- [x] Chronos-2 so với 7 phương pháp trên VN1 và VNF — xong (`07_paper_draft/v3_tables.md`, Table A1).
+- [x] B2b (c) M5 chỉ dùng 21 đặc trưng chung — xong (cuối `phase2_b1_b2.md`).

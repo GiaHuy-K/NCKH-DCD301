@@ -216,11 +216,11 @@ Phân tích đó chia nhóm **sau khi biết kết quả**. Câu hỏi của B4 
 
 ## 6. Trạng thái
 
-- [ ] B0 Dọn dẹp, chạy lại thử nghiệm giá
+- [x] B0 Dọn dẹp, chạy lại thử nghiệm giá — xong cả ba cửa sổ
 - [x] B1 Đồng bộ (06_experiment_results/phase2_b1_b2.md)
 - [x] B2 Khác biệt hai bộ dữ liệu (06_experiment_results/phase2_b1_b2.md)
 - [x] B2b Khả năng so sánh: (a) cân bằng thành phần; (b) bỏ đặc trưng giá VN1; (c) M5 chỉ dùng đặc trưng chung — cả ba đều không giải thích được khác biệt M5–VN1
 - [x] B3 Phân cụm — GMM k = 3 (06_experiment_results/phase2_b3_b4.md)
 - [x] B4 So sánh với ADI–CV² — kết quả phần lớn âm tính: C1 có, C2 một phần, C3 không, C4 không
-- [x] B5 Bỏ TSB-P — kết luận gần như không đổi; tương quan hạng M5–VN1 yếu đi (06_experiment_results/phase2_b5.md). Chronos-2 cho phụ lục: đang tính lại
+- [x] B5 Bỏ TSB-P — kết luận gần như không đổi; tương quan hạng M5–VN1 yếu đi (06_experiment_results/phase2_b5.md). Chronos-2 trên VN1 và VNF: đã tính lại với 7 phương pháp
 - [ ] B6 Viết lại bài — đã có `v3_draft.md` và bản theo mẫu ICIIT `08_final_submission/ICIIT2027_paper_v3.docx` (10 trang, dựng bằng `code/build_iciit_docx.py`); còn: tên tác giả, đơn vị, link kho mã, biểu mẫu Authors' Information, Turnitin

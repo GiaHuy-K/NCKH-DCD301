@@ -34,7 +34,7 @@ CLASSES = ["all", "smooth", "erratic", "intermittent", "lumpy"]
 B = 200
 
 
-def totals(name, offset, models):
+def totals(name, offset, models, fc_suffix=""):
     """Per-series totals [n_sel] for demand and, per (model, τ), sales and on-hand; units and value."""
     d = config.DEFAULT
     L = d["L"]
@@ -56,7 +56,7 @@ def totals(name, offset, models):
     w = slice(config.WARMUP_WEEKS, None)
     out = {"class": cls[idx], "has_price": has_p,
            "demand": D[:, w].sum(1), "demand_v": (D * P)[:, w].sum(1)}
-    fc = os.path.join(config.CACHE, "forecasts", name + (f"_w{offset}" if offset else ""))
+    fc = os.path.join(config.CACHE, "forecasts", name + (f"_w{offset}" if offset else "") + (f"_{fc_suffix}" if fc_suffix else ""))
     qs = list(config.QUANTILES)
     for m in models:
         Q = np.load(os.path.join(fc, f"{m}_h{h}.npz"))["Q"][idx]
@@ -143,13 +143,15 @@ def main():
     ap.add_argument("--models", default=",".join(MODELS))
     ap.add_argument("--out-suffix", default="")
     ap.add_argument("--datasets", default="M5,VN1")
+    ap.add_argument("--fc-suffix", default="", help="suffix of the forecast cache folder, e.g. nop for the price ablation")
     a = ap.parse_args()
     models = a.models.split(",")
-    sfx = (f"_w{a.offset}" if a.offset else "") + (f"_{a.out_suffix}" if a.out_suffix else "")
+    sfx = ((f"_w{a.offset}" if a.offset else "") + (f"_{a.fc_suffix}" if a.fc_suffix else "")
+           + (f"_{a.out_suffix}" if a.out_suffix else ""))
     res = []
     for name in a.datasets.split(","):
         print(f"{name}: simulating τ grid ...", flush=True)
-        tot = totals(name, a.offset, models)
+        tot = totals(name, a.offset, models, a.fc_suffix)
         for value in (False, True):
             t = analyse(tot, models, value)
             t.insert(0, "dataset", name)

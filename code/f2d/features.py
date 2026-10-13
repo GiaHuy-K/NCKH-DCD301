@@ -20,6 +20,7 @@ SCALE_FLOOR = 0.1
 class Builder:
     def __init__(self, panel):
         self.p = panel
+        self.use_price = panel.get("use_price", True)       # False: price ablation (run_pipeline.py --no-price)
         Y = panel["Y"]
         self.n, self.T = Y.shape
         act = ~np.isnan(Y)
@@ -79,7 +80,8 @@ class Builder:
         n += ["zero_share_13", "weeks_since_sale", "week_of_year", "month"]
         if self.ev_event is not None:
             n += ["n_event", "snap_days"]
-        n += ["price", "price_change_4"]
+        if self.use_price:
+            n += ["price", "price_change_4"]
         # No "price_observed" flag for VN1: prices are only reported in weeks with sales, so the flag
         # duplicates lag_1 > 0 in training, and Phase 2 has no prices at all, which would set it to 0
         # for every series in the second test block (train/test shift).
@@ -116,10 +118,11 @@ class Builder:
             a, b = o, min(o + h, self.T)
             cols.append(np.full(self.n, self.ev_event[a:b].sum(), np.float64))
             cols.append(self.ev_snap[:, a:b].sum(1).astype(np.float64))
-        P = self.p["P"]
-        cols.append(P[:, o - 1])
-        with np.errstate(divide="ignore", invalid="ignore"):
-            cols.append(P[:, o - 1] / P[:, o - 5] - 1 if o >= 5 else np.full(self.n, np.nan))
+        if self.use_price:
+            P = self.p["P"]
+            cols.append(P[:, o - 1])
+            with np.errstate(divide="ignore", invalid="ignore"):
+                cols.append(P[:, o - 1] / P[:, o - 5] - 1 if o >= 5 else np.full(self.n, np.nan))
         X = np.column_stack(cols + [self.static, s[:, None]]).astype(np.float32)
         return X, s
 

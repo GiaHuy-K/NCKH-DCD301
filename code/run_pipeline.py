@@ -59,6 +59,8 @@ def main():
     ap.add_argument("--tag", default="", help="suffix of the output folder")
     ap.add_argument("--offset", type=int, default=0,
                     help="earlier test window: drop the last OFFSET weeks of the panel (output tag defaults to w<OFFSET>)")
+    ap.add_argument("--no-price", action="store_true",
+                    help="ablation: drop the price features of the ML models (tag gets the suffix 'nop')")
     ap.add_argument("--out-suffix", default="",
                     help="extra suffix of the output folder only (forecast cache is shared), e.g. c2 for runs with chronos2")
     ap.add_argument("--default-only-models", default="hgb_quantile,chronos2",
@@ -71,6 +73,9 @@ def main():
     if a.offset:
         p = data.truncate(p, p["Y"].shape[1] - a.offset)
         a.tag = a.tag or f"w{a.offset}"
+    if a.no_price:
+        p["use_price"] = False
+        a.tag = f"{a.tag}_nop" if a.tag else "nop"
     Y = p["Y"]
     n, T = Y.shape
     test0 = T - config.TEST_WEEKS

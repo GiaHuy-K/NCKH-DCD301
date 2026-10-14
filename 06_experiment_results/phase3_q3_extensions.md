@@ -4,7 +4,7 @@ Ngày 13/10/2026. Căn cứ: bản duyệt nội bộ của `08_final_submission
 
 | # | Việc | Trạng thái |
 |---|---|---|
-| 1 | Đọc toàn văn Theodorou et al. (2025) và định vị lại | ✅ cách 2: định vị lại theo abstract (mục 1); toàn văn vẫn chưa có |
+| 1 | Đọc toàn văn Theodorou et al. (2025) và định vị lại | ✅ xong theo toàn văn (mục 1) |
 | 2 | Quy tắc chọn phương pháp theo dự đoán tăng trưởng | ✅ xong (mục 2) |
 | 3 | Độ nhạy theo siêu tham số | ✅ xong (mục 3) |
 
@@ -27,21 +27,41 @@ Khi có toàn văn, cần đối chiếu:
 
 Sau đó sửa mục 1, 2 và 6 của bài, và bỏ câu "we had access to the abstract of [7] only".
 
-### Đã làm (14/10/2026): định vị lại chỉ dựa trên abstract
+### Đối chiếu theo toàn văn (14/10/2026)
 
-Không lấy được toàn văn (không tìm thấy preprint, ResearchGate hay SSRN). Bài được sửa sao cho mọi câu về [7] chỉ dựa trên abstract:
+Nguồn: `papers_pdf/1-s2.0-S0377221724009755-main.pdf` (không commit). Số trang là số trang tạp chí.
 
-- Abstract (theo trang RePEc/IDEAS) nói:
-  - mô phỏng chính sách order-up-to với dự báo phân vị trên M5;
-  - các điều kiện được thay đổi gồm cấu hình chính sách, kiểu nhu cầu, và chi phí tồn kho, đặt hàng, mất doanh số;
-  - độ chính xác quan trọng nhất khi chi phí tồn kho bằng hoặc lớn hơn chi phí mất doanh số;
-  - khi chi phí mất doanh số cao hơn, phương pháp chính xác nhất có thể không phải lựa chọn tốt nhất, nhất là với chu kỳ xem xét và lead time ngắn, và với nhu cầu intermittent.
-- Những gì đã sửa:
-  - Mục 1: bỏ câu "we had access to the abstract of [7] only"; câu nhắc [7] được bổ sung vế "short review periods and lead times".
-  - Mục 2: thay "According to its abstract, …" bằng mô tả thiết kế và kết luận của [7]. Thêm "including [7], which varies cost parameters on one dataset" vào câu nêu điểm khác biệt.
-  - Mục 6: thêm điều kiện "when lost-sales costs dominate" vào câu "consistent with [7]".
-- Nguyên tắc: chỉ nêu những gì bài mình **thêm vào**, không khẳng định điều [7] không làm.
-  - [Nhận định nhóm] Nếu sau này có toàn văn, chỉ cần bổ sung chi tiết; không câu nào hiện tại phải rút lại.
+| # | Điểm | Theodorou et al. (2025) | Bài của nhóm |
+|---|---|---|---|
+| 1 | Phương pháp | 13 phương pháp: Naive, sNaive, Quant, MA, SES, Croston, SBA, TSB, ES, ARIMA, ADIDA, iMAPA, LightGBM (cách làm của đội thắng M5). Phân vị = dự báo điểm + phân vị thực nghiệm của sai số quá khứ, giả định sai số đồng phương sai (tr. 416) | 7 phương pháp, trong đó 3 mô hình phân vị trực tiếp (LGB-Q, HGB-Q, EMP) |
+| 2 | Chính sách | Order-up-to, mất doanh số, mô phỏng theo ngày. Mức phục vụ mục tiêu 90/95/99%; R = 3/7/14/21 ngày; L = 3/9 ngày; 24 tổ hợp (tr. 417) | Order-up-to theo tuần, L = 2, R = 1, có thanh lý |
+| 3 | Dữ liệu và kiểu nhu cầu | M5 cấp 11 (sản phẩm–bang, coi như kho). 7.783/9.147 chuỗi, bỏ chuỗi dưới 2,5 năm. ADI–CV²: intermittent 44,5%, smooth 34,8%, lumpy 12,5%, erratic 8,2% (tr. 417) | M5 cấp sản phẩm–cửa hàng, giữ mọi chuỗi; thêm VN1 |
+| 4 | Số giai đoạn kiểm thử | 1 năm (365 ngày) sau 4 tuần khởi động (tr. 417) | 3 cửa sổ × 26 tuần |
+| 5 | Kết luận chính | iMAPA chính xác nhất ở hầu hết cấu hình; LightGBM chỉ tốt nhất ở chân trời dài nhất (R = 21, L = 9). Đường đánh đổi nhìn chung theo độ chính xác. Tổng chi phí (h = 1%/năm, b = 12,5% giá, k = 0,5 USD) ưu tiên MA/ES/SES; liên hệ giữa độ chính xác và chi phí yếu (tr. 419–421) | LGB-Q chính xác nhất và tiết kiệm nhất trên M5; trên VN1 phụ thuộc giai đoạn |
+| 6 | So sánh ở cùng mức phục vụ hay theo chi phí? | Cả hai: đường hiệu quả (tồn kho so với mất doanh số, theo các mức mục tiêu) và chi phí tiền. Ghi nhận mức phục vụ thực tế khác mức mục tiêu giữa các phương pháp (tr. 420) | Nội suy tồn kho ở cùng fill rate **thực tế**, có khoảng tin cậy bootstrap |
+
+Những điểm [7] tự nêu làm hạn chế và hướng nghiên cứu tiếp, và bài của nhóm đáp ứng:
+
+- chỉ một công ty bán qua cửa hàng; bán lẻ online có thể khác (tr. 425) → VN1;
+- bỏ các chuỗi ngắn (tr. 424–425) → giữ mọi chuỗi;
+- mô phỏng một năm quá khứ không bảo đảm cho năm sau (tr. 423) → ba cửa sổ kiểm thử;
+- đề xuất thử dự báo xác suất từ mạng nơ-ron (tr. 425) → chưa làm (chỉ có Chronos-2 ở phụ lục).
+
+### Những gì đã sửa trong bài
+
+- **Hai chỗ sai khi chỉ dựa vào abstract:**
+  - Bài cũ viết "[7] varies cost parameters". Thực tế [7] cố định một bộ chi phí và chỉ thay đổi tham số chính sách. Đã sửa.
+  - Bài cũ coi "so sánh không cần giả định chi phí" là điểm khác với [7]. Thực tế [7] cũng dùng đường đánh đổi. Điểm khác thật sự là nhóm so sánh ở cùng fill rate **thực tế**, còn [7] so sánh ở cùng mức **mục tiêu**. Đã sửa.
+- **Introduction:**
+  - thêm "[7] call for replications on online retail data";
+  - thêm [7] vào khoảng trống 1 (bỏ chuỗi dưới 2,5 năm) và khoảng trống 2 (một dataset, một giai đoạn);
+  - khoảng trống 3: thêm "cost-based and cost-free conclusions can disagree [7]".
+- **Đóng góp 2:** "equal realised fill rate".
+- **Related Work:** đoạn mô tả [7] viết lại theo toàn văn; câu so sánh nêu hai điểm khác cụ thể (phân vị trực tiếp; cùng fill rate thực tế).
+- **Discussion:**
+  - thêm câu nối ba cửa sổ với cảnh báo của [7];
+  - thêm đoạn "Direct quantiles matter": trên M5, lấy phân vị từ dự báo điểm cần thêm 3,3–8,2% tồn kho tại fill rate 0,94 (LGB-T, LGB-C ở Bảng 3).
+  - [Nhận định nhóm] Điều này, cùng với cấp dữ liệu theo ngày và sản phẩm–bang, **có thể** giải thích vì sao LightGBM kém hơn trong [7]. Bài viết ở dạng giả thuyết ("may explain"), không khẳng định.
 
 ## 2. Quy tắc chọn phương pháp theo dự đoán tăng trưởng
 

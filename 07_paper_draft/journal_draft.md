@@ -3,7 +3,7 @@
 > **Journal (extended) version — draft J1, 14/10/2026.** Built on the ICIIT 2027 draft (`v3_draft.md`), without the page limit.
 > Every number comes from a committed result file; the source is given under each table.
 > Markers:
-> - `[PENDING-M5]` — waits for the N-HiTS forecasts on M5 (member B; `07_paper_draft/handoff_neural_baseline.md`). After `git pull`, run `python code/neural_eval.py`.
+> - N-HiTS on M5 was run on a second machine (member B, 14/10/2026; fingerprints matched) and is now included.
 > - `[REF-PENDING]` — a reference whose full text has not yet been read; nothing is claimed from it until it has been.
 > - `[FIG]` — figure still to be produced.
 >
@@ -283,7 +283,7 @@ Each method is allowed its cheapest τ, and r runs from 10 to 1,000. For referen
 |---|---|---|
 | LGB-Q, one horizon | 1,251 s | 146 s |
 | TSB-NB | 68 s | 30 s |
-| N-HiTS, one window, h = 3 | `[PENDING-M5]` | 5–6 min |
+| N-HiTS, one window, h = 3 | 7 min (second laptop, 20 threads, 16 GB) | 5–6 min |
 
 Code, result files and a one-command runner for the neural baseline are available at [link to be added].
 
@@ -291,13 +291,14 @@ Code, result files and a one-command runner for the neural baseline are availabl
 
 ### 5.1 Accuracy
 
-*[Table 3 = v3_tables.md Table 2, plus an N-HiTS row: VN1 wQL 0.107 / 0.079 / 0.104 (source `code/outputs/neural_eval.md`); M5 `[PENDING-M5]`]*
+*[Table 3 = v3_tables.md Table 2, plus an N-HiTS row: wQL M5 0.078 / 0.083 / 0.089, VN1 0.107 / 0.079 / 0.104 (source `code/outputs/neural_eval.md`)]*
 
 **Volume-weighted loss.** By wQL, LGB-Q is the most accurate method in both datasets and all three windows, with HGB-Q within 0.002. LGB-Q is also the best method in every demand class of both datasets and every window.
 
-**N-HiTS** is close behind on VN1:
-- its wQL is 0.107, 0.079 and 0.104 in the three windows, against 0.103, 0.078 and 0.102 for LGB-Q and 0.129, 0.088 and 0.138 for TSB-NB;
-- it is well calibrated in the upper tail: the empirical coverage of the 0.99 quantile is 0.986–0.992.
+**N-HiTS** ranks behind LGB-Q in every run, but ahead of TSB-NB:
+- on VN1 its wQL is 0.107, 0.079 and 0.104 in the three windows, against 0.103, 0.078 and 0.102 for LGB-Q and 0.129, 0.088 and 0.138 for TSB-NB;
+- on M5 its wQL is 0.078, 0.083 and 0.089, against 0.076, 0.080 and 0.086 for LGB-Q and 0.088, 0.091 and 0.098 for TSB-NB;
+- it is well calibrated in the upper tail: the empirical coverage of the 0.99 quantile is 0.986–0.992 on VN1 and 0.987–0.988 on M5.
 
 **Per-series ranks.**
 - On M5, the per-series ranks agree with wQL: LGB-Q ranks first at h = 3 in every window, ahead of HGB-Q by more than the critical difference.
@@ -333,7 +334,7 @@ The lowest loss (LGB-Q in every window) does not reliably give the lowest invent
 - −2.1% [−8.3, +0.4] in the second;
 - +2.6% [−1.8, +10.8] in the third.
 
-Its frontier rank among the eight single methods is 4.4, 2.8 and 3.8. M5: `[PENDING-M5]`.
+Its frontier rank among the eight single methods is 4.4, 2.8 and 3.8. On M5 it needs 2.6–10.0% more inventory than LGB-Q at fill rates 0.90–0.94 in every window, with every interval above zero, and its frontier rank is 3.8, 2.6 and 5.8; it is less efficient than HGB-Q but more efficient than TSB-NB in two of three windows.
 
 **By demand class** *[Table 5 = v3_tables.md Table 4]*:
 - On M5, LGB-Q leads in the smooth, intermittent and lumpy classes in every window.
@@ -462,7 +463,7 @@ LGB-Q and TSB-NB fail on different series of VN1: TSB-NB under-covers series tha
 
 Notes on Table 10:
 - LGB-T misses the highest fill targets in every run, so its regret is averaged over fewer targets.
-- With N-HiTS added to the set of single methods, the maximum regret of C2 over the VN1 windows is −0.7% and that of N-HiTS is 9.5%. M5: `[PENDING-M5]`.
+- With N-HiTS added to the set of single methods, the maximum regret over the six runs is 0.9% for C2, 9.5% for N-HiTS and LGB-T, and 10.2% for LGB-Q (source `code/outputs/neural_eval.md`).
 
 ### 5.7 Robustness: lead time and hyper-parameters
 
@@ -598,7 +599,7 @@ This, besides the daily product–state level, may explain why [7] found LightGB
 
 A standard univariate N-HiTS is competitive in accuracy on VN1 and well calibrated, but it does not lead in inventory efficiency in any window and does not change any conclusion.
 
-This answers part of the call of [7] for neural probabilistic forecasts. It does not establish an upper bound for deep learning: the model uses no covariates and no tuning. M5: `[PENDING-M5]`.
+This answers part of the call of [7] for neural probabilistic forecasts. It does not establish an upper bound for deep learning: the model uses no covariates and no tuning. On M5, where LGB-Q uses prices, events and the product hierarchy, the gap to LGB-Q is larger (2.6–10.0% more inventory) than on VN1.
 
 ### 6.6 Limitations
 

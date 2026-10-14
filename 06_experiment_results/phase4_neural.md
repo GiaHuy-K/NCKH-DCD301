@@ -12,7 +12,7 @@ Dự báo nằm ở `code/outputs/neural/`.
 | Phần | Máy | Trạng thái |
 |---|---|---|
 | VN1, ba cửa sổ | Anh Duy (i5-12450H, 16 GB) | ✅ xong; mỗi cửa sổ 5–6 phút |
-| M5, ba cửa sổ | Thành viên B (`07_paper_draft/handoff_neural_baseline.md`) | ⏳ chờ B push |
+| M5, ba cửa sổ | Thành viên B (20 luồng CPU, 16 GB) | ✅ xong; mỗi cửa sổ khoảng 7 phút; fingerprint khớp cả ba cửa sổ |
 
 ## Thiết kế
 
@@ -54,6 +54,27 @@ Lưu ý: regret của LGB-Q ở cửa sổ thứ hai tăng từ 9,4% lên 10,2%,
    - LGB-Q vẫn là phương pháp đơn tốt nhất ở cửa sổ chính và cửa sổ thứ ba;
    - C2 vẫn có regret thấp nhất, và vẫn tốt hơn mọi phương pháp đơn kể cả khi tính N-HiTS.
 4. [Nhận định nhóm] N-HiTS ở đây là mô hình đơn biến, không tinh chỉnh. Một mô hình neural có dùng biến ngoại sinh và được tinh chỉnh có thể làm tốt hơn. Khi viết bài cần nói rõ đây là một baseline deep learning tiêu chuẩn, không phải giới hạn trên của deep learning.
+
+## Kết quả M5 (thêm 14/10/2026, từ máy thành viên B)
+
+| | Cửa sổ chính | Cửa sổ thứ hai | Cửa sổ thứ ba |
+|---|---|---|---|
+| wQL N-HiTS / LGB-Q / TSB-NB | 0,078 / **0,076** / 0,088 | 0,083 / **0,080** / 0,091 | 0,089 / **0,086** / 0,098 |
+| Tồn kho N-HiTS so với LGB-Q, fill 0,92 | +7,5% [+6,7; +8,3] | +2,6% [+2,3; +3,1] | +8,9% [+6,7; +11,2] |
+| Hạng đường đánh đổi (8 phương pháp) | 3,8 | 2,6 | 5,8 |
+| Regret của N-HiTS | 5,0% | 3,0% | 9,2% |
+
+Regret lớn nhất qua **6 lần chạy** (2 dataset × 3 cửa sổ, 8 phương pháp đơn):
+
+| C2 | N-HiTS | LGB-T | LGB-Q | HGB-Q | TSB-NB |
+|---|---|---|---|---|---|
+| **0,9%** | 9,5% | 9,5% | 10,2% | 12,3% | 20,7% |
+
+### Nhận xét M5
+
+1. Trên M5, N-HiTS kém LGB-Q rõ rệt ở mọi cửa sổ: cần thêm 2,6–10,0% tồn kho, mọi khoảng tin cậy đều nằm trên 0. Nó kém HGB-Q nhưng tốt hơn TSB-NB ở 2 trên 3 cửa sổ.
+2. [Nhận định nhóm] Trên M5, LGB-Q dùng giá, sự kiện và phân cấp sản phẩm; N-HiTS đơn biến không có các thông tin này. Khoảng cách lớn hơn trên VN1 phù hợp với cách giải thích đó.
+3. **Kết luận chính của bài không đổi:** LGB-Q là phương pháp đơn tốt nhất trên M5; C2 có regret lớn nhất thấp nhất (0,9%).
 
 ## Việc tiếp theo
 

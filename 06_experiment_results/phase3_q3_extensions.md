@@ -6,7 +6,7 @@ Ngày 13/10/2026. Căn cứ: bản duyệt nội bộ của `08_final_submission
 |---|---|---|
 | 1 | Đọc toàn văn Theodorou et al. (2025) và định vị lại | ⏳ chờ người dùng lấy PDF |
 | 2 | Quy tắc chọn phương pháp theo dự đoán tăng trưởng | ✅ xong (mục 2) |
-| 3 | Độ nhạy theo siêu tham số | 🔄 VN1 xong; M5 đang chạy (mục 3) |
+| 3 | Độ nhạy theo siêu tham số | ✅ xong (mục 3) |
 
 Mọi phân tích dùng 7 phương pháp. Phần diễn giải gắn nhãn [Nhận định nhóm].
 
@@ -101,7 +101,7 @@ Cửa sổ kế tiếp, fill rate 0,92, chênh lệch so với LGB-Q (%):
 
 ## 3. Độ nhạy theo siêu tham số
 
-Nguồn: `code/outputs/hparam_sensitivity.md` (script `code/hparam_sensitivity.py`).
+Nguồn: `code/outputs/hparam_sensitivity.md` (script `code/hparam_sensitivity.py`); bản sao ở `06_experiment_results/tables/hparam_sensitivity.md`.
 
 ### Thiết kế
 
@@ -138,4 +138,26 @@ Tại fill rate 0,92: Δ LGB-T là −2,5 / −8,9 / −4,5 / −3,6 (chỉ smal
 
 ### Kết quả M5
 
-*Đang chạy* (`code/outputs/logs/hparam_all.log`). Sẽ bổ sung khi xong.
+Cùng cách đọc như bảng VN1. Fill rate 0,94:
+
+| Cấu hình | wQL LGB-Q | wQL LGB-T | Tồn kho LGB-Q | Δ LGB-T | Δ TSB-NB | LGB-Q so với cấu hình default |
+|---|---|---|---|---|---|---|
+| default | 0,0761 | 0,0833 | 1,376 | +5,1 [+4,4; +5,8] | +10,0 [+9,0; +10,9] | — |
+| small_trees | 0,0771 | 0,0843 | 1,384 | +5,8 [+5,0; +6,6] | +9,3 [+8,4; +10,1] | +0,6 [+0,4; +0,8] |
+| large_trees | 0,0759 | 0,0834 | 1,366 | +5,7 [+4,8; +6,3] | +10,8 [+10,0; +11,6] | −0,7 [−1,0; −0,5] |
+| regularised | 0,0761 | 0,0836 | 1,376 | +5,5 [+4,7; +6,2] | +10,0 [+9,1; +10,8] | +0,0 [−0,1; +0,2] |
+
+Tại fill rate 0,92: Δ LGB-T là +5,5 / +4,7 / +6,8 / +5,3 và Δ TSB-NB là +10,4 / +7,5 / +11,0 / +9,8 (default / small / large / regularised), mọi khoảng tin cậy đều nằm hẳn trên 0; LGB-Q so với default là +2,6 / −0,5 / +0,6.
+
+**Kết luận cho M5:**
+
+- Kết luận của bài **không đổi ở cả bốn cấu hình**: LGB-Q cần ít tồn kho hơn LGB-T 4,7–6,8% và ít hơn TSB-NB 7,5–11,0%, mọi khoảng tin cậy đều không chứa 0.
+- Tồn kho của chính LGB-Q thay đổi rất ít theo cấu hình: trong khoảng −0,7% đến +2,6% so với default.
+- wQL của LGB-Q thấp hơn LGB-T ở mọi cấu hình (0,076 so với 0,083).
+- [Nhận định nhóm] Lợi thế của LGB-Q trên M5 đến từ cách dự báo (phân vị trực tiếp so với dự báo điểm + tồn kho an toàn), không phải từ một cấu hình siêu tham số may mắn.
+
+### Kết luận chung về siêu tham số
+
+- M5: kết luận vững với cả bốn cấu hình.
+- VN1: kết luận vững với ba trên bốn cấu hình; với cây nhỏ (15 lá), LGB-Q mất lợi thế. Điều này phù hợp với nhận định trong bài rằng kết luận trên VN1 kém vững hơn M5.
+- Câu "Hyper-parameters are not tuned" trong Limitations có thể kèm theo: "M5 conclusions hold under four LightGBM settings" (chi tiết trong repo).

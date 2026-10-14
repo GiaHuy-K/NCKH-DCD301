@@ -63,6 +63,28 @@ Những điểm [7] tự nêu làm hạn chế và hướng nghiên cứu tiếp
   - thêm đoạn "Direct quantiles matter": trên M5, lấy phân vị từ dự báo điểm cần thêm 3,3–8,2% tồn kho tại fill rate 0,94 (LGB-T, LGB-C ở Bảng 3).
   - [Nhận định nhóm] Điều này, cùng với cấp dữ liệu theo ngày và sản phẩm–bang, **có thể** giải thích vì sao LightGBM kém hơn trong [7]. Bài viết ở dạng giả thuyết ("may explain"), không khẳng định.
 
+### Ba bài bổ sung (14/10/2026)
+
+PDF trong `papers_pdf/` (không commit). DOI đã đối chiếu với PDF.
+
+| Bài | Thiết kế | Kết luận chính | Dùng trong bài như thế nào |
+|---|---|---|---|
+| [23] Spiliotis, Makridakis, Kaltsounis, Assimakopoulos (2021), *IJPE* 240, 108237 | 30.490 chuỗi sản phẩm–cửa hàng M5 theo ngày. 21 phương pháp, gồm các bài thắng M5 và GBT. Một giai đoạn kiểm thử 28 ngày. Order-up-to, mất doanh số, R = L = 1 ngày. Phân vị 0,75 / 0,835 / 0,975 / 0,995 | Không phương pháp nào tốt nhất ở mọi phân vị. Phương pháp thực nghiệm đơn giản (QEE, NB, SES-emp) cho kết quả tồn kho tốt hơn và rẻ hơn ML. Bài thắng M5 hiệu chỉnh kém ở mức phục vụ thấp. Dự báo tốt hơn không bảo đảm tồn kho tốt hơn | Introduction (độ chính xác ≠ quyết định; một giai đoạn kiểm thử); Related Work; Discussion (đối chiếu với EMP) |
+| [24] Petropoulos, Wang, Disney (2019), *IJF* 35, 251–265 | 334 chuỗi tháng M3 (industry), rolling origin, order-up-to, lead time 1/3/6/12 | Kết hợp dự báo cho kết quả tồn kho tốt nhất. Các cuộc thi chỉ đo độ chính xác và độ chệch, bỏ qua thước đo hữu dụng | Câu mở đầu ("score forecasts, not decisions"); Related Work |
+| [25] Babai, Ali, Nikolopoulos (2012), *Omega* 40, 713–721 | 4.815 SKU của Không quân Anh (RAF), (T, S) order-up-to, nhu cầu theo phân phối nhị thức âm, đường hiệu quả (mức phục vụ đạt được so với chi phí tồn kho) | Gộp theo thời gian cho mức phục vụ cao hơn, hiệu quả hơn ở mức phục vụ trên 90% | Trích cho: đường đánh đổi là công cụ chuẩn; phân phối nhị thức âm cho TSB-NB |
+
+[Nhận định nhóm] [23] và [7] đều thấy phương pháp đơn giản thắng ML trên M5 theo ngày, còn nhóm thấy LGB-Q thắng trên M5 theo tuần. Bài nêu sự khác biệt này và cho rằng tần suất, độ dài đánh giá, và cách tạo phân vị có thể là nguyên nhân. Bài không khẳng định nguyên nhân.
+
+Để giữ 10 trang, đã rút gọn:
+
+- câu về định nghĩa ngày bắt đầu chuỗi ở mục 3.1;
+- một câu của abstract;
+- thời gian chạy TSB-NB;
+- câu về dead13 trên M5;
+- câu về dữ liệu giày dép ở Limitations.
+
+Các kết quả này vẫn có trong repo.
+
 ## 2. Quy tắc chọn phương pháp theo dự đoán tăng trưởng
 
 Nguồn: `code/outputs/growth_rule.md` (script `code/growth_rule.py`).

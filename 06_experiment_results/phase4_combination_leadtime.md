@@ -123,3 +123,49 @@ Người dùng đồng ý đưa C2 vào bản ICIIT.
 - bỏ vài câu lặp ý ở mục 5.2 và Discussion.
 
 Bài hiện **vừa khít 10 trang, không còn dòng trống**.
+
+## B. Góc nhìn chi phí (14/10/2026)
+
+Nguồn: `code/cost_view.py` → `code/outputs/cost_view.md` (bản sao ở `tables/`).
+
+**Câu hỏi:** Theodorou et al. [7] cho thấy kết luận theo đường đánh đổi và theo chi phí có thể ngược nhau. Kết luận của nhóm có đứng vững khi tính bằng chi phí không?
+
+### Cách tính
+
+- Chi phí trên mỗi đơn vị nhu cầu, quy ra "tuần giữ hàng":
+  - C(r) = tồn kho (tuần nhu cầu) + r × (1 − fill rate);
+  - r = phạt mất doanh số / chi phí giữ hàng mỗi tuần.
+- Mỗi phương pháp được chọn mức τ có chi phí thấp nhất cho mình.
+- r chạy từ 10 đến 1.000. Hai mốc tham chiếu:
+  - giữ hàng 20%/năm, mất 30% biên lợi nhuận → r ≈ 78;
+  - bộ chi phí của [7] → r ≈ 650.
+
+### Kết quả
+
+Regret lớn nhất qua 6 lần chạy (%, so với phương pháp đơn rẻ nhất):
+
+| r | 10 | 20 | 50 | 100 | 200 | 500 | 1.000 |
+|---|---|---|---|---|---|---|---|
+| C2 | **0,6** | **0,7** | **1,2** | **3,1** | 1,0 | 16,9 | 28,7 |
+| LGB-Q | 7,3 | 5,7 | 3,8 | 8,1 | **0** | **0** | **0** |
+| HGB-Q | 7,1 | 5,0 | 6,3 | 13,6 | 7,8 | 16,2 | 23,2 |
+| TSB-NB | 6,9 | 7,4 | 15,4 | 26,0 | 49,3 | 108,3 | 147,2 |
+
+Phương pháp đơn rẻ nhất: LGB-Q ở mọi lần chạy M5 và mọi r. Trên VN1, với r nhỏ, phương pháp rẻ nhất có thể là LGB-C, TSB-NB hoặc LGB-T (cửa sổ thứ hai).
+
+### Kết luận
+
+1. **Với r ≤ 200**, tức phần lớn tình huống bán lẻ hợp lý, C2 vẫn là lựa chọn an toàn nhất: regret lớn nhất 3,1%, trong khi LGB-Q tới 8,1%.
+2. **Với r ≥ 500** (mất doanh số rất đắt, như bộ chi phí của [7]), mọi phương pháp đều chọn τ = 0,99.
+   - Khi đó thắng là phương pháp đạt fill rate cao nhất ở τ = 0,99, tức LGB-Q (ví dụ VN1 cửa sổ thứ ba: 0,977 so với 0,966 của C2).
+   - C2 đắt hơn tới 29%, vì phân vị 0,99 của TSB-NB phủ thiếu (độ phủ 0,953–0,969).
+3. **Ngược với [7]:** khi mất doanh số đắt, phương pháp **chính xác nhất** lại tốt nhất. [Nhận định nhóm] Lý do: trong [7], các phương pháp kém chính xác có phân vị bị phình ra nên tự động giữ nhiều hàng; ở đây TSB-NB phủ thiếu ở phân vị cao, nên bị phạt.
+4. **Giới hạn:** lưới τ dừng ở 0,99. Nếu cho phép phân vị cao hơn, C2 có thể bù được một phần. Cần nói rõ điều này nếu viết chi tiết trong bản tạp chí.
+
+### Đã đưa vào bài ICIIT
+
+- Thêm vào đoạn "C2 is the minimax-regret choice" hai câu giới hạn: (a) với r ≤ 200, C2 lệch phương pháp rẻ nhất tối đa 3,1%; (b) với phạt lớn hơn, LGB-Q tốt nhất và C2 đắt hơn tới 29%, ngược với [7].
+- Để giữ 10 trang, đã bỏ:
+  - câu về thứ tự LGB-Q / LGB-C / HGB-Q khi bỏ giá;
+  - câu "Unmet demand is lost…";
+  - rút gọn câu Spearman ở Limitations và câu về so sánh ở cùng τ.

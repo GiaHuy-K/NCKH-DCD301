@@ -36,12 +36,12 @@ Nếu máy B yếu (ít hơn 16 GB RAM), có thể đổi lại: B chạy VN1, A
 ### 3.1. Lấy code
 
 ```bash
-git clone https://github.com/anhduyBA/NCKH-DCD301.git
+git clone https://github.com/NCKH-LongT/NCKH-DCD301.git
 cd NCKH-DCD301
 git checkout FA26_BDT301_SE1926_G01
 ```
 
-Kiểm tra file `code/run_neural.py` có tồn tại. Nếu không có, Anh Duy chưa push; hãy báo Anh Duy.
+Nếu đã có repo thì chỉ cần `git checkout FA26_BDT301_SE1926_G01` rồi `git pull`. Kiểm tra file `code/run_neural.py` có tồn tại; nếu không có, Anh Duy chưa push, hãy báo Anh Duy.
 
 ### 3.2. Lấy dữ liệu M5
 

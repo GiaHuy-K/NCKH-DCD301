@@ -4,7 +4,7 @@ Ngày 13/10/2026. Căn cứ: bản duyệt nội bộ của `08_final_submission
 
 | # | Việc | Trạng thái |
 |---|---|---|
-| 1 | Đọc toàn văn Theodorou et al. (2025) và định vị lại | ⏳ chờ người dùng lấy PDF |
+| 1 | Đọc toàn văn Theodorou et al. (2025) và định vị lại | ✅ cách 2: định vị lại theo abstract (mục 1); toàn văn vẫn chưa có |
 | 2 | Quy tắc chọn phương pháp theo dự đoán tăng trưởng | ✅ xong (mục 2) |
 | 3 | Độ nhạy theo siêu tham số | ✅ xong (mục 3) |
 
@@ -26,6 +26,22 @@ Khi có toàn văn, cần đối chiếu:
 6. họ có so sánh ở cùng mức phục vụ hay theo chi phí.
 
 Sau đó sửa mục 1, 2 và 6 của bài, và bỏ câu "we had access to the abstract of [7] only".
+
+### Đã làm (14/10/2026): định vị lại chỉ dựa trên abstract
+
+Không lấy được toàn văn (không tìm thấy preprint, ResearchGate hay SSRN). Bài được sửa sao cho mọi câu về [7] chỉ dựa trên abstract:
+
+- Abstract (theo trang RePEc/IDEAS) nói:
+  - mô phỏng chính sách order-up-to với dự báo phân vị trên M5;
+  - các điều kiện được thay đổi gồm cấu hình chính sách, kiểu nhu cầu, và chi phí tồn kho, đặt hàng, mất doanh số;
+  - độ chính xác quan trọng nhất khi chi phí tồn kho bằng hoặc lớn hơn chi phí mất doanh số;
+  - khi chi phí mất doanh số cao hơn, phương pháp chính xác nhất có thể không phải lựa chọn tốt nhất, nhất là với chu kỳ xem xét và lead time ngắn, và với nhu cầu intermittent.
+- Những gì đã sửa:
+  - Mục 1: bỏ câu "we had access to the abstract of [7] only"; câu nhắc [7] được bổ sung vế "short review periods and lead times".
+  - Mục 2: thay "According to its abstract, …" bằng mô tả thiết kế và kết luận của [7]. Thêm "including [7], which varies cost parameters on one dataset" vào câu nêu điểm khác biệt.
+  - Mục 6: thêm điều kiện "when lost-sales costs dominate" vào câu "consistent with [7]".
+- Nguyên tắc: chỉ nêu những gì bài mình **thêm vào**, không khẳng định điều [7] không làm.
+  - [Nhận định nhóm] Nếu sau này có toàn văn, chỉ cần bổ sung chi tiết; không câu nào hiện tại phải rút lại.
 
 ## 2. Quy tắc chọn phương pháp theo dự đoán tăng trưởng
 

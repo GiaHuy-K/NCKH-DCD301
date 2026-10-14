@@ -96,3 +96,30 @@ Regret: phần tồn kho dư so với phương pháp **đơn** tốt nhất tron
 3. **C2 tốt nhất trên VN1 ở cả ba lead time** (−4 đến −8% so với LGB-Q).
 4. Câu Limitations trong bài ICIIT ("only the fill-rate ranking at τ = 0.9 was checked") giờ có thể thay bằng kết quả ở cùng fill rate.
 5. **Giới hạn:** chỉ cửa sổ chính. Hai cửa sổ còn lại cần dự báo h = 2 và h = 5, phải huấn luyện lại.
+
+## Đưa vào bài ICIIT (14/10/2026)
+
+Người dùng đồng ý đưa C2 vào bản ICIIT.
+
+**Thêm hoặc thay:**
+
+- Abstract: câu "LightGBM quantile regression is the minimax-regret choice" → kết quả C2 (6–11% ít tồn kho hơn trên VN1 tại fill rate 0,92; ±1,5% trên M5; regret lớn nhất 0,9% so với 9,4%).
+- Đóng góp 5 (mới): "A simple hedge".
+- Mục 3.2: định nghĩa C2.
+- Mục 5.5 (mới): kết quả C2, nói rõ cặp thành viên được chọn sau khi xem kết quả. Các mục Liquidation và Artefacts dời thành 5.6 và 5.7.
+- Discussion:
+  - đoạn regret đổi thành "C2 is the minimax-regret choice";
+  - đoạn quy tắc tăng trưởng rút còn hai câu, chi tiết để trong repo.
+- Limitations: thay câu về lead time bằng kết quả ở cùng fill rate.
+- Conclusion: thêm câu về C2.
+
+**Rút gọn để giữ 10 trang** (các nội dung này vẫn có trong repo):
+
+- mục 5.1: bỏ các hạng trung bình ở h = 13;
+- mục 5.3: bỏ câu về mức tăng 3,2 lần ở cửa sổ thứ ba;
+- mục 5.4: rút phần mô tả phân cụm;
+- mục 5.6: bỏ câu "factors outside this simulation";
+- mục 5.7: gộp kiểm tra giá và kiểm tra đặc trưng chung;
+- bỏ vài câu lặp ý ở mục 5.2 và Discussion.
+
+Bài hiện **vừa khít 10 trang, không còn dòng trống**.

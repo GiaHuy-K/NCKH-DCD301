@@ -135,7 +135,7 @@ def main():
             last = pred.sort_values("ds").groupby("unique_id").tail(1).set_index("unique_id")   # step h = Z[o]
             v = np.sort(np.maximum(last[cols].to_numpy(np.float64), 0), axis=1)
             Q[last.index.to_numpy(int), origins.index(o)] = v
-        print(f"    origins {c}–{min(c + config.BLOCK_WEEKS, T) - 1} predicted ({time.time() - t0:.0f}s in block)", flush=True)
+        print(f"    origins {c}-{min(c + config.BLOCK_WEEKS, T) - 1} predicted ({time.time() - t0:.0f}s in block)", flush=True)
     miss = np.isnan(Q[rows]).any(axis=(1, 2)).mean()
     print(f"done in {time.time() - t_all:.0f}s; series with missing forecasts: {100 * miss:.2f}%", flush=True)
     if a.quick:

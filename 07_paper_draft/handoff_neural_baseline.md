@@ -16,7 +16,7 @@ Reviewer và bài Theodorou et al. (2025) đều yêu cầu có một mô hình 
 - dự báo tại mỗi tuần trong 26 tuần kiểm thử;
 - huấn luyện lại ở đầu mỗi khối 13 tuần.
 
-Kết quả là một file `.npz` theo định dạng cache sẵn có. Máy của Anh Duy sẽ dùng file đó để chấm điểm cùng 7 phương pháp kia.
+Kết quả là một file `.npz` theo định dạng cache sẵn có. Script `code/member_run_neural.py` tự chạy, kiểm tra rồi commit và push các file này lên nhánh nhóm. Máy của Anh Duy sẽ dùng chúng để chấm điểm cùng 7 phương pháp kia.
 
 **Không sửa script, siêu tham số hay dữ liệu.** Hai máy phải chạy giống hệt nhau thì kết quả mới gộp được.
 
@@ -67,101 +67,108 @@ D:/venvs/nf/Scripts/python.exe -m pip install numpy pandas neuralforecast==3.3.0
 
 Máy của Anh Duy dùng neuralforecast 3.3.0 với torch 2.12.0 (bản CPU).
 
-## 4. Chạy
+## 4. Chạy bằng một lệnh
 
-Mọi lệnh chạy từ thư mục gốc của repo.
+Script `code/member_run_neural.py` làm trọn quy trình. Nó tự động:
 
-### Bước 1 — Chạy thử (vài phút)
+1. kiểm tra nhánh git, phiên bản neuralforecast (3.3.0) và kích thước từng file dữ liệu;
+2. chạy thử một lần và so **fingerprint** dữ liệu với máy của Anh Duy; lệch bất kỳ con số nào là dừng ngay;
+3. chạy thật từng cửa sổ kiểm thử (offset 0, 26, 52) và ghi log;
+4. kiểm tra log: không thiếu dự báo, file đã được ghi;
+5. chép kết quả vào `code/outputs/neural/`, gồm file `.npz`, log, thời gian chạy và cấu hình máy;
+6. **commit riêng thư mục `code/outputs/neural/`**, `git pull --rebase`, rồi `git push` lên nhánh nhóm.
+
+Script commit và push **sau mỗi cửa sổ**. Nếu máy tắt giữa chừng, chỉ cần chạy lại đúng lệnh cũ: các cửa sổ đã xong sẽ được bỏ qua.
+
+Script không sửa code, không sửa dữ liệu, và không commit gì ngoài `code/outputs/neural/`.
+
+### Bước 1 — Kiểm tra máy (vài phút, không commit)
 
 ```bash
-D:/venvs/nf/Scripts/python.exe code/run_neural.py --dataset M5 --offset 0 --h 3 --quick
+D:/venvs/nf/Scripts/python.exe code/member_run_neural.py --check-only
 ```
 
-Dòng `fingerprint` phải **khớp đúng** với bảng dưới. Nếu không khớp, dữ liệu sai: dừng lại và kiểm tra mục 3.2.
-
-| Lần chạy | Dòng fingerprint đúng |
-|---|---|
-| M5, offset 0 | `fingerprint M5 w0: 30490 series x 277 weeks, evaluated 30381, total sales of evaluated series 66793704` |
-| M5, offset 26 | `fingerprint M5 w26: 30490 series x 251 weeks, evaluated 29917, total sales of evaluated series 59390858` |
-| M5, offset 52 | `fingerprint M5 w52: 30490 series x 225 weeks, evaluated 28824, total sales of evaluated series 52145075` |
-| VN1, offset 0 | `fingerprint VN1 w0: 15053 series x 196 weeks, evaluated 13844, total sales of evaluated series 39234029` |
-| VN1, offset 26 | `fingerprint VN1 w26: 15053 series x 170 weeks, evaluated 11442, total sales of evaluated series 31620787` |
-| VN1, offset 52 | `fingerprint VN1 w52: 15053 series x 144 weeks, evaluated 9383, total sales of evaluated series 24659310` |
-
-Kết quả chạy thử đạt yêu cầu khi có dòng `done ...; series with missing forecasts: 0.00%`. Bản chạy thử chỉ huấn luyện 50 bước nên độ phủ phân vị còn thấp; điều này bình thường.
-
-Lần đầu chạy M5 sẽ tạo `data/cache/panel_m5.npz`, mất vài phút. Các lần sau dùng lại file này.
+Kết quả đúng kết thúc bằng `Check-only mode: everything is ready for the full run.` Nếu gặp dòng `STOP: ...`, đọc lý do rồi xem mục 6.
 
 ### Bước 2 — Chạy thật
 
-Ba lệnh, chạy lần lượt. Mỗi lệnh ghi log riêng.
-
 ```bash
-D:/venvs/nf/Scripts/python.exe -u code/run_neural.py --dataset M5 --offset 0  --h 3 > nhits_M5_w0.log 2>&1
-D:/venvs/nf/Scripts/python.exe -u code/run_neural.py --dataset M5 --offset 26 --h 3 > nhits_M5_w26.log 2>&1
-D:/venvs/nf/Scripts/python.exe -u code/run_neural.py --dataset M5 --offset 52 --h 3 > nhits_M5_w52.log 2>&1
+D:/venvs/nf/Scripts/python.exe code/member_run_neural.py
 ```
 
-- **Thời gian:** chưa đo trên M5. Chạy thử 300 chuỗi VN1 với 50 bước mất khoảng 10 giây; bản thật có 1.500 bước và khoảng 30.000 chuỗi. Hãy ghi lại thời gian của lệnh đầu tiên (log có in số giây của từng khối) rồi báo cho Anh Duy.
-- **Không được để máy ngủ hoặc tắt** trong khi chạy.
+- Lệnh này mặc định chạy M5, ba cửa sổ, h = 3.
+- **Thời gian:** chưa đo trên M5. Log in thời gian huấn luyện của từng khối; báo con số của khối đầu tiên cho Anh Duy.
+- **Không để máy ngủ hoặc tắt** trong khi chạy. Lần đầu chạy M5, script tạo `data/cache/panel_m5.npz`, mất vài phút.
 
-Mỗi lệnh xong khi log có dòng `written ...nhits_h3.npz` và `series with missing forecasts: 0.00%`.
+Nếu không có quyền push lên nhánh nhóm, script vẫn commit ở máy và in thông báo. Khi đó gửi thư mục `code/outputs/neural/` cho Anh Duy qua Drive hoặc Zalo. Cũng có thể chạy với `--no-push` rồi tự push sau.
 
-## 5. Bàn giao kết quả
+### Fingerprint đúng (script tự kiểm tra; bảng để tham khảo)
 
-Gửi cho Anh Duy (Google Drive hoặc Zalo):
+| Lần chạy | Fingerprint |
+|---|---|
+| M5, offset 0 | `30490 series x 277 weeks, evaluated 30381, total sales of evaluated series 66793704` |
+| M5, offset 26 | `30490 series x 251 weeks, evaluated 29917, total sales of evaluated series 59390858` |
+| M5, offset 52 | `30490 series x 225 weeks, evaluated 28824, total sales of evaluated series 52145075` |
+| VN1, offset 0 | `15053 series x 196 weeks, evaluated 13844, total sales of evaluated series 39234029` |
+| VN1, offset 26 | `15053 series x 170 weeks, evaluated 11442, total sales of evaluated series 31620787` |
+| VN1, offset 52 | `15053 series x 144 weeks, evaluated 9383, total sales of evaluated series 24659310` |
 
-1. Ba file dự báo:
-   - `data/cache/forecasts/M5/nhits_h3.npz`
-   - `data/cache/forecasts/M5_w26/nhits_h3.npz`
-   - `data/cache/forecasts/M5_w52/nhits_h3.npz`
+## 5. Kết quả sau khi chạy xong
 
-   Mỗi file khoảng 10–20 MB. **Đổi tên khi gửi** thành `M5_nhits_h3.npz`, `M5_w26_nhits_h3.npz`, `M5_w52_nhits_h3.npz` để khỏi lẫn.
-2. Ba file log `nhits_M5_w*.log`.
-3. Thông tin máy: CPU, RAM, và thời gian mỗi lần chạy.
+Trên nhánh nhóm sẽ có:
 
-**Không commit hoặc push** các file `.npz`, log hay thư mục `data/` lên git. Anh Duy sẽ chấm điểm và commit kết quả.
+- `code/outputs/neural/M5_w0_nhits_h3.npz`, `M5_w26_nhits_h3.npz`, `M5_w52_nhits_h3.npz`: mỗi file khoảng 10–20 MB;
+- `code/outputs/neural/logs/`: log của bản chạy thử và từng cửa sổ;
+- `code/outputs/neural/M5_run_info.json`: cấu hình máy và thời gian chạy từng cửa sổ.
+
+**Không** commit thư mục `data/` hay bất kỳ file nào khác.
 
 ## 6. Nếu gặp lỗi
 
-| Lỗi | Cách xử lý |
+| Thông báo | Cách xử lý |
 |---|---|
-| Fingerprint không khớp | Sai file dữ liệu (thường là dùng nhầm `sales_train_validation.csv`) |
-| `MemoryError` hoặc máy treo | Đóng các ứng dụng khác. Nếu vẫn lỗi, báo Anh Duy để đổi phân công. **Không** tự giảm `batch_size` hay số chuỗi |
-| `cannot find the column of quantile` | Sai phiên bản neuralforecast; cài đúng 3.3.0 |
-| Lỗi khác | Gửi nguyên log cho Anh Duy. Không tự sửa `run_neural.py` |
+| `STOP: current branch is ...` | `git checkout FA26_BDT301_SE1926_G01`, rồi `git pull` |
+| `STOP: neuralforecast ... required` | Cài đúng `neuralforecast==3.3.0` trong môi trường ảo |
+| `STOP: ... has N bytes, expected ...` hoặc `missing data file` | Sai file hoặc thiếu file dữ liệu. Thường là dùng nhầm `sales_train_validation.csv` (xem mục 3.2) |
+| `STOP: data fingerprint does not match` | Dữ liệu khác máy Anh Duy. Không chạy tiếp; báo Anh Duy |
+| `STOP: run failed ...` | Gửi file log được nêu trong thông báo cho Anh Duy |
+| `MemoryError` hoặc máy treo | Đóng các ứng dụng khác rồi chạy lại. Nếu vẫn lỗi, báo Anh Duy để đổi phân công. **Không** tự giảm siêu tham số |
+| `push failed` | Kết quả đã commit ở máy. Gửi thư mục `code/outputs/neural/` cho Anh Duy |
 
 ## 7. Prompt cho AI của thành viên B
 
 Dán nguyên đoạn sau vào trợ lý AI (Claude Code, Cursor…) đang mở trong thư mục repo:
 
 ```text
-Tôi là thành viên nhóm nghiên cứu SE1926_G01. Nhiệm vụ: chạy baseline deep learning N-HiTS trên bộ dữ liệu M5
-theo đúng hướng dẫn trong file 07_paper_draft/handoff_neural_baseline.md của repo này. Hãy đọc toàn bộ file đó
-trước, rồi làm lần lượt các mục 3, 4 và 5.
+Tôi là thành viên nhóm nghiên cứu SE1926_G01. Nhiệm vụ: chạy baseline deep learning N-HiTS trên bộ dữ liệu M5 rồi
+push kết quả lên nhánh nhóm, theo đúng file 07_paper_draft/handoff_neural_baseline.md của repo này. Hãy đọc toàn
+bộ file đó trước, rồi làm lần lượt:
+1. git checkout FA26_BDT301_SE1926_G01 và git pull.
+2. Mục 3.2: kiểm tra 3 file M5 trong data/m5-forecasting-accuracy/ đúng kích thước. Nếu chưa có, hướng dẫn tôi tải
+   từ Kaggle; đừng tự tải.
+3. Mục 3.3: tạo môi trường ảo ở ổ còn trống (ít nhất 3 GB) và cài numpy, pandas, neuralforecast==3.3.0. Hỏi tôi
+   trước khi cài.
+4. Mục 4, bước 1: chạy  <python của môi trường ảo> code/member_run_neural.py --check-only
+5. Nếu bước 4 thành công, chạy  <python của môi trường ảo> code/member_run_neural.py  ở chế độ nền và theo dõi
+   log; báo cho tôi thời gian của từng khối và khi mỗi cửa sổ được push.
 
 Quy tắc bắt buộc:
-- KHÔNG sửa code/run_neural.py, các file trong code/f2d/, siêu tham số hay dữ liệu. Nếu script lỗi, dừng lại và
-  báo lỗi cho tôi kèm log; không tự sửa script.
-- Trước khi chạy thật, phải chạy lệnh --quick và so dòng "fingerprint" với bảng ở mục 4; nếu không khớp từng con
-  số thì dừng lại.
-- Đặt môi trường ảo và cache pip ở ổ còn trống (ít nhất 3 GB). Hỏi tôi trước khi tải hoặc cài bất cứ thứ gì.
-- Chạy ba lệnh ở mục 4, bước 2 lần lượt, mỗi lệnh ghi log riêng. Lệnh chạy lâu thì chạy nền và theo dõi log; báo
-  cho tôi thời gian của từng khối.
-- KHÔNG commit, KHÔNG push. Không đưa file .npz, log hay thư mục data/ lên git.
-- Khi xong, kiểm tra mỗi log có "series with missing forecasts: 0.00%" và "written", rồi liệt kê đường dẫn ba
-  file .npz cần gửi cho Anh Duy (mục 5).
+- KHÔNG sửa bất kỳ file nào trong code/ hay data/, kể cả khi gặp lỗi. Gặp "STOP:" hoặc lỗi thì dừng lại, cho tôi
+  xem thông báo và tra bảng ở mục 6.
+- KHÔNG tự chạy git commit hoặc git push bằng tay; script tự commit đúng thư mục code/outputs/neural/. Không đưa
+  thư mục data/ lên git.
+- Không đổi tham số --dataset, --offsets hay --h nếu tôi chưa yêu cầu.
 ```
 
-## 8. Việc của Anh Duy sau khi nhận file
+## 8. Việc của Anh Duy sau khi B push
 
-1. Chép ba file vào `data/cache/forecasts/M5{,_w26,_w52}/nhits_h3.npz` trên máy này.
-2. Chạy VN1 ba cửa sổ trên máy này.
+1. `git pull`, rồi chép `code/outputs/neural/M5_w{0,26,52}_nhits_h3.npz` vào `data/cache/forecasts/M5{,_w26,_w52}/nhits_h3.npz`.
+2. Chạy VN1 trên máy này bằng cùng script: `D:/venvs/nf/Scripts/python.exe code/member_run_neural.py --dataset VN1`.
 3. Chấm điểm:
 
    ```bash
    python code/equal_fill_ci.py --models empirical,tsb_nb,ets,lgb_tweedie,lgb_conformal,hgb_quantile,lgb_quantile,nhits --out-suffix nn
    ```
 
-   Chạy thêm với `--offset 26` và `--offset 52`. Sau đó tính độ chính xác (wQL) và regret có N-HiTS.
+   Chạy thêm với `--offset 26` và `--offset 52`. Sau đó tính độ chính xác (wQL) và regret có N-HiTS và C2.
 4. Ghi kết quả vào `06_experiment_results/` (bản tạp chí).

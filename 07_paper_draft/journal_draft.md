@@ -599,7 +599,7 @@ This, besides the daily product–state level, may explain why [7] found LightGB
 
 A standard univariate N-HiTS is competitive in accuracy on VN1 and well calibrated, but it does not lead in inventory efficiency in any window and does not change any conclusion.
 
-This answers part of the call of [7] for neural probabilistic forecasts. It does not establish an upper bound for deep learning: the model uses no covariates and no tuning. On M5, where LGB-Q uses prices, events and the product hierarchy, the gap to LGB-Q is larger (2.6–10.0% more inventory) than on VN1.
+This answers part of the call of [7] for neural probabilistic forecasts. It does not establish an upper bound for deep learning: the model uses no covariates and no tuning. On M5, where LGB-Q also uses prices, events and the product hierarchy, N-HiTS needs 2.6–10.0% more inventory than LGB-Q in every window, whereas on VN1 the comparison is mixed and N-HiTS is slightly ahead in the second window.
 
 ### 6.6 Limitations
 

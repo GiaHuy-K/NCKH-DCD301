@@ -73,7 +73,7 @@ Regret lớn nhất qua **6 lần chạy** (2 dataset × 3 cửa sổ, 8 phươn
 ### Nhận xét M5
 
 1. Trên M5, N-HiTS kém LGB-Q rõ rệt ở mọi cửa sổ: cần thêm 2,6–10,0% tồn kho, mọi khoảng tin cậy đều nằm trên 0. Nó kém HGB-Q nhưng tốt hơn TSB-NB ở 2 trên 3 cửa sổ.
-2. [Nhận định nhóm] Trên M5, LGB-Q dùng giá, sự kiện và phân cấp sản phẩm; N-HiTS đơn biến không có các thông tin này. Khoảng cách lớn hơn trên VN1 phù hợp với cách giải thích đó.
+2. [Nhận định nhóm] Trên M5, LGB-Q dùng giá, sự kiện và phân cấp sản phẩm; N-HiTS đơn biến không có các thông tin này. Phù hợp với cách giải thích đó, trên M5 N-HiTS kém LGB-Q **nhất quán** ở cả ba cửa sổ, còn trên VN1 thì lẫn lộn (cửa sổ thứ hai N-HiTS còn nhỉnh hơn LGB-Q). Đây chỉ là giả thuyết; bài không kiểm tra N-HiTS có biến ngoại sinh.
 3. **Kết luận chính của bài không đổi:** LGB-Q là phương pháp đơn tốt nhất trên M5; C2 có regret lớn nhất thấp nhất (0,9%).
 
 ## Việc tiếp theo

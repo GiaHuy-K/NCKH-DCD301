@@ -169,3 +169,41 @@ Phương pháp đơn rẻ nhất: LGB-Q ở mọi lần chạy M5 và mọi r. T
   - câu về thứ tự LGB-Q / LGB-C / HGB-Q khi bỏ giá;
   - câu "Unmet demand is lost…";
   - rút gọn câu Spearman ở Limitations và câu về so sánh ở cùng τ.
+
+## Trọng số học được hay trọng số bằng nhau (15/10/2026)
+
+Nguồn: `code/combination_weights.py` → `code/outputs/combination_weights.md`.
+
+**Cách làm:**
+
+- Tổ hợp C_w = w × LGB-Q + (1 − w) × TSB-NB, với w = 0; 0,1; …; 1.
+- Chọn w trên cửa sổ huấn luyện sao cho tồn kho cần thiết trung bình tại fill 0,90–0,94 thấp nhất.
+- Áp dụng w đó cho cửa sổ kế tiếp. Ba lần chuyển cửa sổ giống quy tắc tăng trưởng.
+
+**Kết quả** (so với C2, tức w = 0,5):
+
+| Dataset | w học được | Tồn kho so với C2 |
+|---|---|---|
+| M5 | 0,7–0,8 | ít hơn 0,6–1,7% |
+| VN1 | 0,3–0,6 | kém C2 ở 2 trên 3 lần chuyển (+1,1% đến +3,5%); hòa ở lần còn lại |
+
+**Độ nhạy theo w (VN1, fill 0,92):**
+
+- Trọng số tốt nhất thay đổi giữa các cửa sổ: 0,3 / 0,5 / 0,6–0,7.
+- Mọi w trong khoảng 0,4–0,6 lệch tối đa 2,3 điểm phần trăm so với w tốt nhất của từng cửa sổ.
+
+**Kết luận:**
+
+- Đây là "forecast combination puzzle" (Wang et al. 2023, [26]) ở cấp quyết định tồn kho: trên VN1, nơi cần phòng hộ, ước lượng trọng số tốn nhiều hơn lợi.
+- Trọng số bằng nhau là lựa chọn an toàn.
+- Đã đưa vào bản nháp tạp chí: Bảng 9b, mục 6.3 và mục 2.4.
+
+**Ba tài liệu mới (đọc toàn văn ngày 15/10/2026):**
+
+| Tài liệu | Dùng để trích dẫn |
+|---|---|
+| [26] Wang, Hyndman, Li, Kang (2023), IJF 39(4) | Quantile averaging (Vincentization) cho dự báo xác suất; "forecast combination puzzle" |
+| [27] Montero-Manso và cs. (2020), IJF 36(1) | FFORMA: meta-model học trọng số kết hợp từ đặc trưng chuỗi; hạng 2 ở M4 |
+| [28] Challu và cs. (2023), AAAI 37(6) | N-HiTS: mạng MLP với nội suy phân cấp và lấy mẫu đầu vào đa tần |
+
+DOI của [27] cần chép từ bản xuất bản; bản đã đọc là working paper Monash 19/18.

@@ -207,3 +207,25 @@ Nguồn: `code/combination_weights.py` → `code/outputs/combination_weights.md`
 | [28] Challu và cs. (2023), AAAI 37(6) | N-HiTS: mạng MLP với nội suy phân cấp và lấy mẫu đầu vào đa tần |
 
 DOI của [27] cần chép từ bản xuất bản; bản đã đọc là working paper Monash 19/18.
+
+## Lead time trên cả ba cửa sổ (16/10/2026, theo yêu cầu của reviewer)
+
+Nguồn: `code/leadtime_forecasts.py` tạo dự báo h = 2 và h = 5 cho cửa sổ thứ hai và thứ ba; `code/leadtime_equal_fill.py --offsets 0,26,52` chấm điểm; kết quả ở `code/outputs/leadtime_equal_fill_all_windows.md`. HGB-Q vẫn không có trong phân tích này.
+
+**Kết quả qua 18 lần chạy** (2 dataset × 3 cửa sổ × L = 1, 2, 4):
+
+- **M5:** ở cả 9 tổ hợp cửa sổ × lead time, LGB-Q cần ít tồn kho hơn có ý nghĩa thống kê, tại fill rate 0,94, so với:
+  - LGB-T: 2,5–7,4%;
+  - LGB-C: 4,5–10,9%;
+  - TSB-NB: 4,9–14,8%;
+  - ETS: 5,9–13,4%.
+
+  Regret của LGB-Q không vượt 0,2%.
+- **VN1:** C2 cần ít tồn kho hơn LGB-Q 3,2–10,9% tại fill rate 0,92 ở cả 9 tổ hợp; khoảng tin cậy không chứa 0 ở 7 tổ hợp.
+- **Regret lớn nhất** (so với phương pháp đơn tốt nhất trong 6 phương pháp):
+
+  | C2 | LGB-Q | LGB-T | ETS | TSB-NB |
+  |---|---|---|---|---|
+  | **2,0%** | 12,6% (VN1, cửa sổ thứ hai, L = 4) | 20,2% | 32,3% | 36,3% |
+
+**Đã đưa vào bài:** `08_final_submission/ICIIT2027_Paper_rev3.docx`, gồm abstract, mục 5.5, mục 5.8 ("Lead time") và Limitations. Bài 9 trang.

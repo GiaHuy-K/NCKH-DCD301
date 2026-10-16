@@ -17,15 +17,15 @@ Public retail forecasting benchmarks rank methods by forecast error, although fo
 - four gradient-boosting models;
 - a deep-learning model (N-HiTS).
 
-We evaluate them on two public datasets from different retail settings, M5 (brick-and-mortar) and VN1 (multi-vendor e-commerce). We keep every series and repeat all experiments on three 26-week test windows. Methods are compared at equal realised fill rate along their inventory–fill-rate trade-off curves, with bootstrap confidence intervals. A cost view then checks the conclusions for lost-sales penalties of 10 to 1,000 weeks of holding cost.
+We evaluate them on two public datasets from different retail settings, M5 (brick-and-mortar) and VN1 (multi-vendor e-commerce). We keep every eligible series and repeat all experiments on three 26-week test windows. Methods are compared at equal realised fill rate along their inventory–fill-rate trade-off curves, with bootstrap confidence intervals. A cost view then checks the conclusions for lost-sales penalties of 10 to 1,000 weeks of holding cost.
 
 On M5, LightGBM quantile regression (LGB-Q) is the most accurate method. At a fill rate of 0.94 it needs 3–11% less inventory than point forecasts with safety stock, conformal quantiles, TSB and exponential smoothing, in every window, and also at lead times of one and four weeks (checked in the main window).
 
 On VN1, the most inventory-efficient method changes between windows. We trace this to demand dynamics. A negative-binomial TSB model needs 13–16% less inventory on series with stable demand, whereas only the global quantile model serves series whose demand grows sharply. Neither the ADI–CV² classes nor an unsupervised segmentation separates these series in advance. A classifier that predicts growth recovers part of the possible gain, but unstably.
 
-Averaging the quantiles of LGB-Q and TSB-NB hedges between the two. The average needs 6–11% less inventory than LGB-Q on VN1 at a fill rate of 0.92 in every window, stays within 1.5% of it on M5, and has the smallest worst-case regret (0.9% against 9.4%). This holds for lost-sales penalties up to 200 weeks of holding. For larger penalties, the most accurate method is the cheapest.
+In a post hoc analysis, averaging the quantiles of LGB-Q and TSB-NB hedges between the two. The average needs 6–11% less inventory than LGB-Q on VN1 at a fill rate of 0.92 in all three windows, stays within 1.5% of it on M5, and has the smallest worst-case regret (0.9% against 9.4%). This holds for lost-sales penalties up to 200 weeks of holding. For larger penalties, the most accurate method is the cheapest.
 
-N-HiTS is well calibrated but leads in no window. A quantile-based liquidation rule costs almost no service, but no rule pays off within 26 weeks.
+N-HiTS is well calibrated but leads in no window. A quantile-based liquidation rule costs almost no service, but under the assumed costs no rule pays off within 26 weeks.
 
 **Keywords:** probabilistic forecasting; inventory management; intermittent demand; quantile regression; forecast combination; demand segmentation; M5; VN1
 
@@ -55,11 +55,11 @@ Four gaps remain.
 
 This paper addresses these gaps with a forecast-to-decision benchmark. It does not propose a new forecasting model. Our contributions are:
 
-1. **A reproducible benchmark** of eight probabilistic forecasting methods inside one transparent replenishment-and-liquidation policy, on two public retail datasets from different settings, with all series retained. It runs on a laptop CPU.
+1. **A reproducible benchmark** of eight probabilistic forecasting methods inside one transparent replenishment-and-liquidation policy, on two public retail datasets from different settings, with all eligible series retained (those with at least 13 weeks of history and one sale before the test period). It runs on a laptop CPU.
 2. **A cost-free evaluation protocol.** Methods are compared at equal realised fill rate along their trade-off curves, with bootstrap confidence intervals. A cost view then maps the same curves to total cost over a wide range of lost-sales penalties.
 3. **Evidence on robustness.** Every experiment is repeated on three test windows; the main comparison is also repeated under three lead times and four hyper-parameter settings. This separates findings that hold everywhere from those that depend on the period, the policy or the configuration.
 4. **An explanation of the period dependence on e-commerce data.** We show that it is associated with how much demand grows in the test period. Neither the standard demand classes nor an unsupervised segmentation anticipates this, and a supervised growth predictor helps only partly.
-5. **A simple hedge.** The average of the quantiles of the global quantile model and TSB-NB is the most robust choice across datasets and windows, unless lost sales are very expensive.
+5. **A simple hedge.** The average of the quantiles of the global quantile model and TSB-NB, identified post hoc, has the smallest worst-case regret in the six dataset–window runs tested, unless lost sales are very expensive. It needs confirmation on new periods.
 
 The rest of the paper is organised as follows:
 
@@ -571,7 +571,7 @@ None of the three checks removes the difference between the datasets, so we attr
 - the fixed rule and the dead-stock rule lose more service: they raise the stockout rate by 5–20% and 10–23%;
 - dead13 targets stock that would indeed have remained unsold on VN1, but on M5 products that have not sold for 13 weeks usually sell again.
 
-**Economic benefit.** No rule shows an economic benefit within 26 weeks:
+**Economic benefit.** Under our cost model, which assumes holding rates and margins rather than observing profits, no rule shows an economic benefit within 26 weeks:
 - the break-even salvage ratio of the quantile rule on VN1 is 0.91–1.21 of unit cost;
 - that of the other rules is at or above 0.97.
 
@@ -604,7 +604,7 @@ This, besides the daily product–state level, may explain why [7] found LightGB
 ### 6.4 Which method to use
 
 **If the lost-sales penalty is moderate** (up to about 200 weeks of holding cost per lost unit):
-- C2 is the minimax-regret choice. Its worst-case excess over the best single method is 0.9% in inventory and 3.1% in cost, against 9.4% and 8.1% for LGB-Q.
+- C2 had the smallest worst-case regret in our six runs. Its worst-case excess over the best single method is 0.9% in inventory and 3.1% in cost, against 9.4% and 8.1% for LGB-Q.
 - On brick-and-mortar data the choice matters little: C2 and LGB-Q differ by less than 2%.
 - On e-commerce data C2 saves 6–11%.
 
@@ -625,8 +625,8 @@ This answers part of the call of [7] for neural probabilistic forecasts. It does
 - **Demand data.** Sales are used as demand, so historical stockouts are not visible.
 - **Simulation assumptions.** Unmet demand is lost and liquidation does not change demand. Pack sizes, minimum order quantities and capacity limits, which [7] name as relevant constraints, are not modelled.
 - **Ex post analysis.** The demand-shift analysis is ex post.
-- **Choice of the combination.** C2 was specified after the main analysis.
-- **Few windows.** Three windows per dataset are few, and method rankings agree only weakly between the two datasets (Spearman correlation of frontier ranks 0.86, 0.29 and 0.61).
+- **Choice of the combination.** C2 was specified after the main analysis, so its regret is an in-sample result over the three windows. It is evidence for the hedge, not a guarantee of its performance in deployment, and should be confirmed on new periods and datasets.
+- **Few windows.** Bootstrap intervals reflect variation across series, not across independent periods. Statements about stability therefore refer to the three windows tested. Three windows per dataset are few, and method rankings agree only weakly between the two datasets (Spearman correlation of frontier ranks 0.86, 0.29 and 0.61).
 - **Lead-time check.** The lead-time check covers the main window only.
 - **Chronos-2.** A zero-shot, univariate use of the Chronos-2 foundation model [22] on VN1 was less accurate than LGB-Q on 69–73% of the series and never the most inventory-efficient method (Appendix A).
 - **Vietnamese case study.** A case study on Vietnamese footwear retail data with actual unit costs gave similar break-even salvage ratios but has unresolved data-quality and licence issues, so it is not reported.
@@ -635,11 +635,11 @@ This answers part of the call of [7] for neural probabilistic forecasts. It does
 
 We benchmarked eight probabilistic forecasting methods and two combinations inside one replenishment-and-liquidation policy on two public retail datasets, three test windows, three lead times, four hyper-parameter settings and a range of cost structures.
 
-- **Brick-and-mortar data (M5).** The conclusion is stable: LightGBM quantile regression is the most accurate and the most inventory-efficient single method.
+- **Brick-and-mortar data (M5).** The conclusion holds in all three test windows: LightGBM quantile regression is the most accurate and the most inventory-efficient single method.
 - **E-commerce data (VN1).** The best single method changes with the period, because a statistical model is more economical for stable series while only a global quantile model serves series whose demand grows sharply. Neither demand classes nor a segmentation anticipate which series will grow, and a supervised predictor helps only partly.
-- **Combination.** Averaging the quantiles of LightGBM and TSB-NB hedges between them. It needs 6–11% less inventory than LightGBM on VN1 at a fill rate of 0.92 in every window, stays within 1.5% of it on M5, and is the minimax-regret choice unless lost sales are very expensive.
+- **Combination.** Averaging the quantiles of LightGBM and TSB-NB hedges between them. In a post hoc analysis, it needs 6–11% less inventory than LightGBM on VN1 at a fill rate of 0.92 in all three windows, stays within 1.5% of it on M5, and has the smallest worst-case regret unless lost sales are very expensive.
 - **Deep learning.** A standard N-HiTS does not change these conclusions.
-- **Liquidation.** A quantile-based liquidation rule is safe for service, but within 26 weeks liquidation pays off only at salvage prices near unit cost.
+- **Liquidation.** A quantile-based liquidation rule is safe for service, but under the assumed costs liquidation pays off within 26 weeks only at salvage prices near unit cost.
 
 Future work should:
 - test covariate-informed neural and foundation models;

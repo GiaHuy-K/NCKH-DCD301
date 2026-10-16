@@ -139,6 +139,12 @@ def main():
     t = t.replace(old2, "this result and the N-HiTS baseline (Section 5.8) are not part of the seven-method main benchmark.")
     set_text(p, t)
 
+    # 6a. code link
+    p = find(d, "Each dataset is evaluated on its final 26 weeks")
+    t = p.text
+    assert "[link to be added]" in t
+    set_text(p, t.replace("[link to be added]", "https://github.com/anhduyBA/forecast-to-decision-benchmark"))
+
     # 6. reference [26]
     clone_after(find(d, "[25]  M. Z. Babai"), REF26)
     d.save(a.out)

@@ -139,6 +139,15 @@ def main():
     t = t.replace(old2, "this result and the N-HiTS baseline (Section 5.8) are not part of the seven-method main benchmark.")
     set_text(p, t)
 
+    # 0. authors (order as given by the first author)
+    set_text(find(d, "[AUTHOR NAMES TO BE ADDED]"), "Bùi Anh Duy, Khổng Trần Gia Huy, Nguyễn Thị Cẩm Hương, Trương Long")
+    set_text(find(d, "[Affiliation, city, country, e-mail"),
+             "FPT University, Ho Chi Minh City, Vietnam · anhduy290605@gmail.com, huyktgse180313@fpt.edu.vn, "
+             "huongntc2@fpt.edu.vn, longt5@fpt.edu.vn")
+    p = find(d, "ACM Reference Format:")
+    assert "[Author names to be added]" in p.text
+    set_text(p, p.text.replace("[Author names to be added]", "Bùi Anh Duy, Khổng Trần Gia Huy, Nguyễn Thị Cẩm Hương, and Trương Long"))
+
     # 6a. code link
     p = find(d, "Each dataset is evaluated on its final 26 weeks")
     t = p.text
